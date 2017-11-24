@@ -4,6 +4,7 @@ package com.chinatelecom.di.cluster;
 import com.chinatelecom.di.common.io.stream.StreamInput;
 import com.chinatelecom.di.common.io.stream.StreamOutPut;
 import com.chinatelecom.di.common.io.stream.Streamable;
+import com.chinatelecom.di.common.settings.Settings;
 
 import java.io.IOException;
 
@@ -33,4 +34,10 @@ public class ClusterName  implements Streamable {
     public void writeTo(StreamOutPut out) throws IOException {
 
     }
+
+    public static ClusterName clusterNameFromSetting(Settings settings) {
+        return new ClusterName(settings.get("cluster.name",ClusterName.DEFAULT.value));
+    }
+
+
 }

@@ -1,5 +1,7 @@
 package com.chinatelecom.di;
 
+import com.google.inject.AbstractModule;
+
 /**
  * Created by song on 2017/10/16.
  */
@@ -39,6 +41,18 @@ public class Version {
         this.luceneVersion=luceneVersion;
     }
 
+public static  class Module extends AbstractModule{
 
+    public  final  Version version;
+
+    public Module(Version version){
+        this.version=version;
+    }
+
+    @Override
+    protected void configure() {
+        bind(Version.class).toInstance(version);
+    }
+}
 
 }
