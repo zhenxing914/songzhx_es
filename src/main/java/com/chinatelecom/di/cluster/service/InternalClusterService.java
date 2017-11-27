@@ -4,6 +4,7 @@ import com.chinatelecom.di.ThreadPool.ThreadPool;
 import com.chinatelecom.di.Version;
 import com.chinatelecom.di.cluster.ClusterName;
 import com.chinatelecom.di.cluster.ClusterState;
+import com.chinatelecom.di.cluster.block.ClusterBlocks;
 import com.chinatelecom.di.cluster.node.DiscoveryNode;
 import com.chinatelecom.di.cluster.node.DiscoveryNodes;
 import com.chinatelecom.di.cluster.routing.OperateRouting;
@@ -25,6 +26,9 @@ public class InternalClusterService extends AbstractLifecycleComponent<ClusterSe
     private volatile ClusterState clusterState;
 
 
+    private final ClusterBlocks.Builder initialBlocks;
+
+
     @Inject
     InternalClusterService(Settings settings, DiscoveryService discoveryService, OperateRouting operateRouting,
                            TransportService transportService, NodeSettingsService nodeSettingsService,
@@ -34,6 +38,9 @@ public class InternalClusterService extends AbstractLifecycleComponent<ClusterSe
 
         //will be replaced on doStart
         this.clusterState= ClusterState.builder(clusterName).build();
+
+
+        initialBlocks= ClusterBlocks.builder().addGlobalBlock(discoveryService.getNoMasterBlock());
     }
 
 
@@ -42,10 +49,11 @@ public class InternalClusterService extends AbstractLifecycleComponent<ClusterSe
         System.out.println("InternalClusterService doStart .");
 
 
-        //this.clusterState=ClusterState.builder(clusterState).blocks(initalBlocks).build();
-        DiscoveryNode localNode = new DiscoveryNode("node1", "0001", "localhost", "nodeAttribute", "version1");
-        DiscoveryNodes.Builder nodeBuilder=DiscoveryNodes.builder().put(localNode).localNodeId(localNode.id());
+        this.clusterState=ClusterState.builder(clusterState).blocks(initialBlocks).build();
 
+        DiscoveryNode localNode = new DiscoveryNode("node1", "0001", "localhost",
+                "nodeAttribute", "version1");
+        DiscoveryNodes.Builder nodeBuilder=DiscoveryNodes.builder().put(localNode).localNodeId(localNode.id());
 
         //this.clusterState=ClusterState.builder(clusterState).nodes(nodeBuilder).block(initalBlocks).build();
 

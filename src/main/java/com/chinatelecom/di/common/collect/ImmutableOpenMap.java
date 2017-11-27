@@ -32,6 +32,10 @@ public  final class ImmutableOpenMap<KType,VType> implements Iterable<ObjectObje
     public static final ImmutableOpenMap EMPTY=new ImmutableOpenMap(new ObjectObjectHashMap());
 
 
+    public static  <KType, VType>   Builder<KType, VType>  builder(ImmutableOpenMap<KType,VType> map){
+        return new Builder<KType, VType>(map);
+    }
+
     /**
      *
      * @param <KType>
@@ -50,6 +54,8 @@ public  final class ImmutableOpenMap<KType,VType> implements Iterable<ObjectObje
 
             this(EMPTY);
         }
+
+
 
         public Builder(ImmutableOpenMap<KType,VType> map)
         {

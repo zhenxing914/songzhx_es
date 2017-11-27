@@ -1,5 +1,6 @@
 package com.chinatelecom.di.cluster;
 
+import com.chinatelecom.di.cluster.block.ClusterBlock;
 import com.chinatelecom.di.cluster.block.ClusterBlocks;
 import com.chinatelecom.di.cluster.metadata.MetaData;
 import com.chinatelecom.di.cluster.node.DiscoveryNodes;
@@ -13,9 +14,12 @@ import com.chinatelecom.di.common.xcontent.ToXContent;
 
 import java.io.IOException;
 
+
 /**
  * Created by song on 2017/11/7.
  */
+
+
 public class ClusterState implements Diffable<ClusterState>{
 
 
@@ -58,7 +62,7 @@ public class ClusterState implements Diffable<ClusterState>{
 
     private final ClusterBlocks  blocks;
 
-    private final ImmutableOpenMap<String,Custom> customs;
+    private final ImmutableOpenMap<String, Custom> customs;
 
     private  final ClusterName clusterName;
 
@@ -72,6 +76,10 @@ public class ClusterState implements Diffable<ClusterState>{
         return  new Builder(clusterName);
     }
 
+
+    public static Builder builder(ClusterState clusterState){
+        return new Builder(clusterState);
+    }
 
     public ClusterState(long version, String stateUUID,ClusterState state){
         this(state.clusterName,version,stateUUID,state.metaData,state.routingTable,state.nodes,state.blocks,state.customs(),false);
@@ -113,6 +121,17 @@ public class ClusterState implements Diffable<ClusterState>{
         private  final ImmutableOpenMap.Builder<String,Custom> customs;
         private boolean fromDiff;
 
+        public Builder(ClusterState state){
+            this.clusterName=state.clusterName;
+            this.version=state.version;
+            this.uuid=state.stateUUID;
+            this.routingTable=state.routingTable;
+            this.metaData=state.metaData;
+            this.blocks=state.blocks;
+            this.customs=ImmutableOpenMap.builder(state.customs);
+            this.fromDiff=false;
+        }
+
 
         public Builder(ClusterName clusterName){
             customs=ImmutableOpenMap.builder();
@@ -125,6 +144,19 @@ public class ClusterState implements Diffable<ClusterState>{
 
             }
             return new ClusterState(clusterName,version,uuid,metaData,routingTable,nodes,blocks,customs.build(),fromDiff);
+        }
+
+
+        public Builder blocks(ClusterBlocks.Builder blockBuilder){
+            return blocks(blockBuilder.build());
+
+        }
+
+
+        public Builder blocks(ClusterBlocks blocks)
+        {
+            this.blocks=blocks;
+            return this;
         }
     }
 
