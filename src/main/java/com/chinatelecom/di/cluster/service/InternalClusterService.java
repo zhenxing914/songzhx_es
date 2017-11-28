@@ -39,8 +39,8 @@ public class InternalClusterService extends AbstractLifecycleComponent<ClusterSe
         //will be replaced on doStart
         this.clusterState= ClusterState.builder(clusterName).build();
 
-
         initialBlocks= ClusterBlocks.builder().addGlobalBlock(discoveryService.getNoMasterBlock());
+
     }
 
 
@@ -55,7 +55,7 @@ public class InternalClusterService extends AbstractLifecycleComponent<ClusterSe
                 "nodeAttribute", "version1");
         DiscoveryNodes.Builder nodeBuilder=DiscoveryNodes.builder().put(localNode).localNodeId(localNode.id());
 
-        //this.clusterState=ClusterState.builder(clusterState).nodes(nodeBuilder).block(initalBlocks).build();
+        this.clusterState=ClusterState.builder(clusterState).nodes(nodeBuilder).blocks(initialBlocks).build();
 
 
 

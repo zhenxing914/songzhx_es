@@ -1,6 +1,5 @@
 package com.chinatelecom.di.cluster;
 
-import com.chinatelecom.di.cluster.block.ClusterBlock;
 import com.chinatelecom.di.cluster.block.ClusterBlocks;
 import com.chinatelecom.di.cluster.metadata.MetaData;
 import com.chinatelecom.di.cluster.node.DiscoveryNodes;
@@ -156,6 +155,15 @@ public class ClusterState implements Diffable<ClusterState>{
         public Builder blocks(ClusterBlocks blocks)
         {
             this.blocks=blocks;
+            return this;
+        }
+
+        public Builder nodes(DiscoveryNodes.Builder nodesBuilder) {
+            return nodes(nodesBuilder.build());
+        }
+
+        public Builder nodes(DiscoveryNodes nodes){
+            this.nodes=nodes;
             return this;
         }
     }

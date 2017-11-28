@@ -12,15 +12,16 @@ import java.util.Set;
 public class ClusterBlocks {
 
 
-    public static final ClusterBlocks EMPTY_CLUSTER_BLOCK=new ClusterBlocks(ImmutableSet.<ClusterBlock>of(),
-            ImmutableMap.<String,ImmutableSet<ClusterBlock>>of());
-
     private  final ImmutableSet<ClusterBlock> global;
 
     private final ImmutableMap<String , ImmutableSet<ClusterBlock>> indicesBlocks;
 
+    public static final ClusterBlocks EMPTY_CLUSTER_BLOCK=new ClusterBlocks(ImmutableSet.<ClusterBlock>of(),
+            ImmutableMap.<String,ImmutableSet<ClusterBlock>>of());
+
 
     public ClusterBlocks(ImmutableSet<ClusterBlock>  global, ImmutableMap<String, ImmutableSet<ClusterBlock>> indicesBlocks) {
+
         this.global=global;
         this.indicesBlocks=indicesBlocks;
 
@@ -47,8 +48,11 @@ public class ClusterBlocks {
         }
 
         public Builder addGlobalBlock(ClusterBlock clusterBlock){
+
             global.add(clusterBlock);
+
             return this;
+
         }
     }
 }

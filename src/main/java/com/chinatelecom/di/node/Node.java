@@ -32,7 +32,7 @@ public class Node {
         module.add(new NodeModule());
         module.add(new ClusterModule());
         module.add(new ThreadPoolModule());
-        module.add(new DiscoveryModule());
+        module.add(new DiscoveryModule(this.settings));
         module.add(new ClusterNameModule(this.settings));
         module.add(new TransportModule());
         injector=module.createInjector();

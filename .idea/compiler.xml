@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="mytest" />
+        <module name="songzhx_es" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="mytest" target="1.6" />
+      <module name="songzhx_es" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,6 +1,5 @@
 package com.chinatelecom.di.common.settings;
 
-import com.chinatelecom.di.cluster.node.DiscoveryNodes;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,8 +8,23 @@ import java.util.Map;
  * Created by song on 2017/11/23.
  */
 public class Settings {
+
+
     public String  get(String setting,String defaultValue) {
-        return "elasticsearch";
+
+        switch (setting)
+        {
+            case "discovery.type":
+                return "local";
+
+            case "discovery.zen.no_master_block" :
+                return "all";
+
+            default :
+                return "elasticsearch";
+
+
+        }
     }
 
 
@@ -18,7 +32,9 @@ public class Settings {
        return new Builder();
     }
 
+
     public static class Builder{
+
         private final Map<String,String > map=new LinkedHashMap<String,String>();
 
 
@@ -26,5 +42,6 @@ public class Settings {
             //map.putAll(settings);
             return this;
         }
+
     }
 }
