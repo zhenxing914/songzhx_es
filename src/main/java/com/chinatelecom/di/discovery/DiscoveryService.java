@@ -20,6 +20,7 @@ public class DiscoveryService  extends AbstractLifecycleComponent<DiscoveryServi
 
     @Inject
     public DiscoveryService(Settings settings,DiscoverySettings discoverySettings,Discovery discovery){
+        super(settings);
 
         this.discoverySettings=discoverySettings;
         this.discovery=discovery;

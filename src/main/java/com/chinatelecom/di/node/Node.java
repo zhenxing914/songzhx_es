@@ -1,5 +1,6 @@
 package com.chinatelecom.di.node;
 
+import com.chinatelecom.di.ThreadPool.ThreadPool;
 import com.chinatelecom.di.ThreadPool.ThreadPoolModule;
 import com.chinatelecom.di.Version;
 import com.chinatelecom.di.cluster.ClusterModule;
@@ -20,9 +21,14 @@ import com.google.inject.Injector;
 public class Node {
 
 
+
     private final Injector injector;
 
+
+
     Settings settings=new Settings();
+
+    final ThreadPool threadPool=new ThreadPool(this.settings);
 
     public Node(Version version)
     {
@@ -31,16 +37,17 @@ public class Node {
         module.add(new SettingsModule(this.settings));
         module.add(new NodeModule());
         module.add(new ClusterModule());
-        module.add(new ThreadPoolModule());
+        module.add(new ThreadPoolModule(threadPool));
         module.add(new DiscoveryModule(this.settings));
         module.add(new ClusterNameModule(this.settings));
-        module.add(new TransportModule());
+        module.add(new TransportModule(this.settings));
         injector=module.createInjector();
     }
 
     public void start(){
 
         System.out.println("node start.");
+
 
         injector.getInstance(ClusterService.class).start();
     }

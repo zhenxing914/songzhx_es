@@ -18,7 +18,10 @@ public class Settings {
                 return "local";
 
             case "discovery.zen.no_master_block" :
-                return "all";
+                return "write";
+
+            case "transport.type":
+                return "netty";
 
             default :
                 return "elasticsearch";

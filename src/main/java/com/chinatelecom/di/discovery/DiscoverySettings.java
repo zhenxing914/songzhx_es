@@ -8,6 +8,7 @@ import com.chinatelecom.di.node.settings.NodeSettingsService;
 import com.chinatelecom.di.rest.RestStatus;
 
 import javax.inject.Inject;
+import java.util.EnumSet;
 
 /**
  * Created by song on 2017/11/28.
@@ -26,9 +27,12 @@ public class DiscoverySettings extends AbstractComponent {
 
     public final static ClusterBlock NO_MASTER_BLOCK_ALL=new ClusterBlock(NO_MASTER_BLOCK_ID,"no master",true,true,
             RestStatus.SERVICE_UNAVAILABLE, ClusterBlockLevel.ALL);
+    public final static ClusterBlock NO_MASTER_BLOCK_WRITES=new ClusterBlock(NO_MASTER_BLOCK_ID,"no master",true, false,
+            RestStatus.SERVICE_UNAVAILABLE, EnumSet.of(ClusterBlockLevel.WRITE,ClusterBlockLevel.METADATA_WRITE));
 
     @Inject
     public DiscoverySettings(Settings settings, NodeSettingsService nodeSettingsService){
+        super(settings);
 
         noMasterBlock=parseNoMasterBlock(settings.get(NO_MASTER_BLOCK,DEFAULT_NO_MASTER_BLOCK));
     }
@@ -37,8 +41,8 @@ public class DiscoverySettings extends AbstractComponent {
         switch(value){
             case "all" :
                 return NO_MASTER_BLOCK_ALL;
-//            case "write" :
-//                return NO_MASTER_BLOCK_WRITES;
+            case "write" :
+                return NO_MASTER_BLOCK_WRITES;
             default:
                 throw new IllegalArgumentException("invaild master block ["+ value+"]");
         }
