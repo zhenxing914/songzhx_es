@@ -31,6 +31,10 @@ public class Settings {
     }
 
 
+    public String get(String name){
+        return null;
+    }
+
     public static Builder settingBuilder(){
        return new Builder();
     }

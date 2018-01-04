@@ -25,10 +25,10 @@ public class DiscoverySettings extends AbstractComponent {
 
     private static final int NO_MASTER_BLOCK_ID = 2 ;
 
-    public final static ClusterBlock NO_MASTER_BLOCK_ALL=new ClusterBlock(NO_MASTER_BLOCK_ID,"no master",true,true,
-            RestStatus.SERVICE_UNAVAILABLE, ClusterBlockLevel.ALL);
-    public final static ClusterBlock NO_MASTER_BLOCK_WRITES=new ClusterBlock(NO_MASTER_BLOCK_ID,"no master",true, false,
-            RestStatus.SERVICE_UNAVAILABLE, EnumSet.of(ClusterBlockLevel.WRITE,ClusterBlockLevel.METADATA_WRITE));
+    public final static ClusterBlock NO_MASTER_BLOCK_ALL=new ClusterBlock(NO_MASTER_BLOCK_ID,"no master",true,
+            true, RestStatus.SERVICE_UNAVAILABLE, ClusterBlockLevel.ALL);
+    public final static ClusterBlock NO_MASTER_BLOCK_WRITES=new ClusterBlock(NO_MASTER_BLOCK_ID,"no master",true,
+            false, RestStatus.SERVICE_UNAVAILABLE, EnumSet.of(ClusterBlockLevel.WRITE,ClusterBlockLevel.METADATA_WRITE));
 
     @Inject
     public DiscoverySettings(Settings settings, NodeSettingsService nodeSettingsService){

@@ -8,7 +8,6 @@ import com.chinatelecom.di.common.settings.Settings;
 public abstract  class AbstractLifecycleComponent<T> extends  AbstractComponent implements LifecycleComponent<T>{
 
 
-
     protected AbstractLifecycleComponent(Settings settings){
         super(settings);
     }

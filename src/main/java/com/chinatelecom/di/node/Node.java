@@ -5,10 +5,12 @@ import com.chinatelecom.di.ThreadPool.ThreadPoolModule;
 import com.chinatelecom.di.Version;
 import com.chinatelecom.di.cluster.ClusterModule;
 import com.chinatelecom.di.cluster.ClusterNameModule;
+import com.chinatelecom.di.cluster.routing.RoutingService;
 import com.chinatelecom.di.cluster.service.ClusterService;
 import com.chinatelecom.di.common.ModuleBuilder;
 import com.chinatelecom.di.common.settings.Settings;
 import com.chinatelecom.di.common.settings.SettingsModule;
+import com.chinatelecom.di.discovery.Discovery;
 import com.chinatelecom.di.discovery.DiscoveryModule;
 import com.chinatelecom.di.transport.TransportModule;
 import com.google.inject.Injector;
@@ -47,6 +49,8 @@ public class Node {
     public void start(){
 
         System.out.println("node start.");
+
+        injector.getInstance(Discovery.class).setRoutingService(injector.getInstance(RoutingService.class));
 
 
         injector.getInstance(ClusterService.class).start();

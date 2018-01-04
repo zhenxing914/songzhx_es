@@ -12,15 +12,18 @@ import com.chinatelecom.di.cluster.node.DiscoveryNodes;
 import com.chinatelecom.di.cluster.routing.OperateRouting;
 import com.chinatelecom.di.common.component.AbstractLifecycleComponent;
 import com.chinatelecom.di.common.settings.Settings;
+import com.chinatelecom.di.common.util.concurent.EsExecutors;
+import com.chinatelecom.di.common.util.concurent.PrioritizedEsThreadPoolExecutor;
 import com.chinatelecom.di.discovery.DiscoveryNodeService;
 import com.chinatelecom.di.discovery.DiscoveryService;
 import com.chinatelecom.di.node.settings.NodeSettingsService;
 import com.chinatelecom.di.tasks.TaskManager;
 import com.chinatelecom.di.transport.TransportService;
-
+import static com.chinatelecom.di.common.util.concurent.EsExecutors.daemonThreadFactory ;
 
 import javax.inject.Inject;
 import java.util.Collection;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -28,6 +31,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 
 public class InternalClusterService extends AbstractLifecycleComponent<ClusterService> implements ClusterService {
+
+    private static final String UPDATA_THREAD_NAME="clusterService#updateTask";
+
+    private  volatile PrioritizedEsThreadPoolExecutor updateTaskExecutor;
     /**
      * Those 3 state listeners are changing infrequently CopyOnWriteArrayList is just fine
      */
@@ -60,6 +67,7 @@ public class InternalClusterService extends AbstractLifecycleComponent<ClusterSe
         initialBlocks= ClusterBlocks.builder().addGlobalBlock(discoveryService.getNoMasterBlock());
 
         taskManager=transportService.getTaskManger();
+
     }
 
 
@@ -71,12 +79,17 @@ public class InternalClusterService extends AbstractLifecycleComponent<ClusterSe
         add(taskManager);
 
         this.clusterState=ClusterState.builder(clusterState).blocks(initialBlocks).build();
+        this.updateTaskExecutor= EsExecutors.newSinglePrioritizing(UPDATA_THREAD_NAME,daemonThreadFactory(settings,UPDATA_THREAD_NAME));
+
+
+        //Map<String,String> nodeAttributes=discoveryNodeService.buildAttributes();
 
         DiscoveryNode localNode = new DiscoveryNode("node1", "0001", "localhost",
                 "nodeAttribute", "version1");
         DiscoveryNodes.Builder nodeBuilder=DiscoveryNodes.builder().put(localNode).localNodeId(localNode.id());
 
         this.clusterState=ClusterState.builder(clusterState).nodes(nodeBuilder).blocks(initialBlocks).build();
+
 
     }
 

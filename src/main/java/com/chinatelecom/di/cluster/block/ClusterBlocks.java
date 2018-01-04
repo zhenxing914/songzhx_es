@@ -12,7 +12,7 @@ import java.util.Set;
 public class ClusterBlocks {
 
 
-    private  final ImmutableSet<ClusterBlock> global;
+    private final ImmutableSet<ClusterBlock> global;
 
     private final ImmutableMap<String , ImmutableSet<ClusterBlock>> indicesBlocks;
 
@@ -40,9 +40,13 @@ public class ClusterBlocks {
 
 
         public ClusterBlocks build() {
+
             ImmutableMap.Builder<String,ImmutableSet<ClusterBlock>>   indicesBuilder= ImmutableBiMap.builder();
+
             for(Map.Entry<String,Set<ClusterBlock>> entry:indices.entrySet()) {
+
                 indicesBuilder.put(entry.getKey(),ImmutableSet.copyOf(entry.getValue()));
+
             }
             return new ClusterBlocks(ImmutableSet.copyOf(global),indicesBuilder.build());
         }
