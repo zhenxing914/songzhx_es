@@ -12,7 +12,9 @@ import com.chinatelecom.di.common.settings.Settings;
 import com.chinatelecom.di.common.settings.SettingsModule;
 import com.chinatelecom.di.discovery.Discovery;
 import com.chinatelecom.di.discovery.DiscoveryModule;
+import com.chinatelecom.di.discovery.DiscoveryService;
 import com.chinatelecom.di.transport.TransportModule;
+import com.chinatelecom.di.transport.TransportService;
 import com.google.inject.Injector;
 
 
@@ -53,6 +55,8 @@ public class Node {
         injector.getInstance(Discovery.class).setRoutingService(injector.getInstance(RoutingService.class));
 
 
+        TransportService transportService=injector.getInstance(TransportService.class).start();
+        transportService.start();
         injector.getInstance(ClusterService.class).start();
     }
 }

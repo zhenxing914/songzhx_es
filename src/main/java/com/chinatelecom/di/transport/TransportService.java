@@ -14,6 +14,9 @@ public class TransportService extends AbstractLifecycleComponent<TransportServic
 
     protected final TaskManager taskManager;
 
+   // private final TransportService.Adapter adapter;
+
+
 
     @Inject
     public TransportService(Settings settings, Transport transport, ThreadPool threadPool){
@@ -31,9 +34,26 @@ public class TransportService extends AbstractLifecycleComponent<TransportServic
     @Override
     protected void doStart() {
 
+        //adapter.rxMetric.clear();
+
+
     }
 
     public TaskManager getTaskManger() {
         return taskManager;
+    }
+
+    protected class Adapter implements TransportServiceAdapter {
+
+
+        @Override
+        public void received(long size) {
+
+        }
+
+        @Override
+        public void sent(long size) {
+
+        }
     }
 }

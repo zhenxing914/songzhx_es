@@ -1,11 +1,9 @@
 package com.chinatelecom.di.discovery;
 
-import com.chinatelecom.di.cluster.node.DiscoveryNode;
 import com.chinatelecom.di.common.settings.Settings;
 import com.chinatelecom.di.discovery.local.LocalDiscovery;
+import com.chinatelecom.di.discovery.zen.ZenDiscovery;
 import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
-import com.google.inject.Module;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +25,10 @@ public class DiscoveryModule extends  AbstractModule {
         this.settings=settings;
 
         addDiscoveryType("local",LocalDiscovery.class);
+        addDiscoveryType("zen",ZenDiscovery.class);
+//        addElectMasterService("zen",ElectMasterService.class);
+//        //always add the unicast hosts ,or things get angry!
+//        addZenPing(UnicastZenPing.class);
 
     }
 
