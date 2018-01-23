@@ -9,7 +9,7 @@ import com.chinatelecom.di.common.settings.Settings;
 public abstract  class AllocationDecider extends AbstractComponent{
 
 
-    public AllocationDecider(Settings settings) {
+    protected AllocationDecider(Settings settings) {
         super(settings);
     }
 }

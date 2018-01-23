@@ -26,7 +26,7 @@ public class RoutingService extends AbstractLifecycleComponent<RoutingService> i
         this.threadPool=threadPool;
         this.allocationService=allocationService;
         this.clusterService=clusterService;
-    }
+}
 
     @Override
     public void clusterChanged(ClusterChangeEvent event) {

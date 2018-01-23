@@ -15,6 +15,7 @@
     <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:16.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-multibindings:4.0" level="project" />
     <orderEntry type="library" name="Maven: com.carrotsearch:hppc:0.7.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:5.5.5" level="project" />
   </component>

@@ -12,7 +12,6 @@ import com.chinatelecom.di.common.settings.Settings;
 import com.chinatelecom.di.common.settings.SettingsModule;
 import com.chinatelecom.di.discovery.Discovery;
 import com.chinatelecom.di.discovery.DiscoveryModule;
-import com.chinatelecom.di.discovery.DiscoveryService;
 import com.chinatelecom.di.transport.TransportModule;
 import com.chinatelecom.di.transport.TransportService;
 import com.google.inject.Injector;
@@ -40,7 +39,7 @@ public class Node {
         module.add(new Version.Module(version));
         module.add(new SettingsModule(this.settings));
         module.add(new NodeModule());
-        module.add(new ClusterModule());
+        module.add(new ClusterModule(this.settings));
         module.add(new ThreadPoolModule(threadPool));
         module.add(new DiscoveryModule(this.settings));
         module.add(new ClusterNameModule(this.settings));

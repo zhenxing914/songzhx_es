@@ -24,7 +24,7 @@ public class Settings {
                 return "netty";
 
             default :
-                return "elasticsearch";
+                return defaultValue;
 
 
         }
