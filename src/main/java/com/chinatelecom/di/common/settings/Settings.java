@@ -1,6 +1,7 @@
 package com.chinatelecom.di.common.settings;
 
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,7 +11,15 @@ import java.util.Map;
 public class Settings {
 
 
-    public String  get(String setting,String defaultValue) {
+    public Settings(Map<String, String> stringStringMap) {
+
+    }
+
+    public Settings(){
+
+    }
+
+    public String  get(String setting, String defaultValue) {
 
         switch (setting)
         {
@@ -35,8 +44,18 @@ public class Settings {
         return null;
     }
 
-    public static Builder settingBuilder(){
+    public static Builder settingsBuilder(){
        return new Builder();
+    }
+
+    public int getAsInt(String settings, int defaultValue) {
+
+        return defaultValue;
+
+    }
+
+    public String[] getAsArray(String bind_host, String[] defaultArray) {
+        return   defaultArray;
     }
 
 
@@ -48,6 +67,10 @@ public class Settings {
         public Builder put(Settings settings){
             //map.putAll(settings);
             return this;
+        }
+
+        public Settings build(){
+            return new Settings(Collections.unmodifiableMap(map));
         }
 
     }

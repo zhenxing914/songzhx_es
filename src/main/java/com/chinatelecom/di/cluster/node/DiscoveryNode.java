@@ -1,5 +1,7 @@
 package com.chinatelecom.di.cluster.node;
 
+import com.chinatelecom.di.common.settings.Settings;
+
 /**
  * Created by song on 2017/10/18.
  */
@@ -26,5 +28,13 @@ public class DiscoveryNode {
     public String  id()
     {
         return nodeId;
+    }
+
+    public static boolean localNode(Settings settings) {
+//        if(settings.get("node.local")!=null){
+//
+//        }
+        return false;
+
     }
 }

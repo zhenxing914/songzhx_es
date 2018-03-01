@@ -12,7 +12,9 @@ import com.google.inject.Inject;
  */
 public class TransportService extends AbstractLifecycleComponent<TransportService> {
 
+    protected final Transport transport;
     protected final TaskManager taskManager;
+    protected final ThreadPool threadPool;
 
    // private final TransportService.Adapter adapter;
 
@@ -22,7 +24,8 @@ public class TransportService extends AbstractLifecycleComponent<TransportServic
     public TransportService(Settings settings, Transport transport, ThreadPool threadPool){
 
         super(settings);
-
+        this.transport=transport;
+        this.threadPool=threadPool;
         taskManager=createTaskManager();
     }
 
@@ -35,6 +38,7 @@ public class TransportService extends AbstractLifecycleComponent<TransportServic
     protected void doStart() {
 
         //adapter.rxMetric.clear();
+        transport.start();
 
 
     }

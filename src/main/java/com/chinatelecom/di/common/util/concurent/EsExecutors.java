@@ -1,6 +1,7 @@
 package com.chinatelecom.di.common.util.concurent;
 
 import com.chinatelecom.di.common.settings.Settings;
+import com.google.common.base.Joiner;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
@@ -20,6 +21,13 @@ public class EsExecutors {
         return daemonThreadFactory(threadName(settings,namePrefix));
     }
 
+
+
+    public static ThreadFactory daemonThreadFactory(Settings settings , String... names){
+
+        return daemonThreadFactory(threadName(settings,names));
+    }
+
     public static ThreadFactory daemonThreadFactory(String namePrefix){
         return new EsThreadFactory(namePrefix);
     }
@@ -34,6 +42,11 @@ public class EsExecutors {
             name="elasticsearch["+namePrefix+"]";
         }
         return name;
+    }
+
+    public static String threadName(Settings settings,String ... names)
+    {
+        return threadName(settings,"["+ Joiner.on(".").skipNulls().join(names)+"]");
     }
 
     static class EsThreadFactory implements ThreadFactory{
@@ -53,7 +66,7 @@ public class EsExecutors {
 
             Thread t=new Thread(group,r,
                     namePrefix+"[T#"+threadNumber.getAndIncrement()+"]");
-            return null;
+            return t;
         }
     }
 }

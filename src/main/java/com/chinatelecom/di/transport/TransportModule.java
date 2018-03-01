@@ -1,6 +1,8 @@
 package com.chinatelecom.di.transport;
 
+import com.chinatelecom.di.cluster.node.DiscoveryNode;
 import com.chinatelecom.di.common.settings.Settings;
+import com.chinatelecom.di.discovery.Discovery;
 import com.chinatelecom.di.transport.local.LocalTransport;
 import com.chinatelecom.di.transport.netty.NettyTransport;
 import com.google.common.collect.Maps;
@@ -38,9 +40,10 @@ public class TransportModule extends AbstractModule {
 
     @Override
     protected void configure() {
+
         bind(TransportService.class).asEagerSingleton();
 
-        String defaultType=NETTY_TRANSPORT;
+        String defaultType= DiscoveryNode.localNode(settings)? LOCAL_TRANSPORT:NETTY_TRANSPORT;
         String typeName= settings.get(TRANSPORT_TYPE_KEY,defaultType);
         Class<? extends Transport> clazz=transports.get(typeName);
         if(clazz==null){
